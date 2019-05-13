@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hongtu.crawler.mapper.VehicleLocateExpMapper">   <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <resultMap id="vehicleMap" type="com.hongtu.crawler.entity.VehicleLocateExpData">
+        <result property="id" column="id"/>
+        <result property="eventId" column="eventId"/>
+        <result property="exceptCompaTime" column="exceptCompaTime"/>
+        <result property="entName" column="entName"/>
+        <result property="senderCode" column="senderCode"/>
+        <result property="bookingNo" column="bookingNo"/>
+        <result property="jobOrderNo" column="jobOrderNo"/>
+        <result property="vehicleNumber" column="vehicleNumber"/>
+        <result property="loadRegCode" column="loadRegCode"/>
+        <result property="despatchDate" column="despatchDate"/>
+        <result property="unloadRegCode" column="unloadRegCode"/>
+        <result property="receiptDate" column="receiptDate"/>
+        <result property="dwState" column="dwState"/>
+        <result property="dwContent" column="dwContent"/>
+    </resultMap>
+    <insert id="VechicleLocateExpInsertInBatch" parameterType="java.util.List">  <!-- 书写 SQL 语句 -->
+        INSERT INTO vehiclelocateexpdata(
+          eventId,
+          exceptCompaTime,
+          entName,
+          senderCode,
+          bookingNo,
+          jobOrderNo,
+          vehicleNumber,
+          loadRegCode,
+          despatchDate,
+          unloadRegCode,
+          receiptDate,
+          dwState,
+          dwContent
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
+            #{item.eventId},
+            #{item.exceptCompaTime},
+            #{item.entName},
+            #{item.senderCode},
+            #{item.bookingNo},
+            #{item.jobOrderNo},
+            #{item.vehicleNumber},
+            #{item.loadRegCode},
+            #{item.despatchDate},
+            #{item.unloadRegCode},
+            #{item.receiptDate},
+            #{item.dwState},
+            #{item.dwContent}
+        )
+        </foreach>
+    </insert>
+    <sql id="updateInBatch_sql">
+      <set>
+          <if test="eventId != null and eventId != ''">
+            eventId = #{eventId},
+          </if>
+          <if test="exceptCompaTime != null and exceptCompaTime != ''">
+              exceptCompaTime = #{exceptCompaTime},
+          </if>
+          <if test="entName != null and entName != ''">
+              entName = #{entName},
+          </if>
+          <if test="senderCode != null and senderCode != ''">
+              senderCode = #{senderCode},
+          </if>
+          <if test="bookingNo != null and bookingNo != ''">
+              bookingNo = #{bookingNo},
+          </if>
+          <if test="jobOrderNo != null and jobOrderNo != ''">
+              jobOrderNo = #{jobOrderNo},
+          </if>
+          <if test="vehicleNumber != null and vehicleNumber != ''">
+              vehicleNumber = #{vehicleNumber},
+          </if>
+          <if test="loadRegCode != null and loadRegCode != ''">
+              loadRegCode = #{loadRegCode},
+          </if>
+          <if test="despatchDate != null and despatchDate != ''">
+              despatchDate = #{despatchDate},
+          </if>
+          <if test="unloadRegCode != null and unloadRegCode != ''">
+              unloadRegCode = #{unloadRegCode},
+          </if>
+          <if test="receiptDate != null and receiptDate != ''">
+              receiptDate = #{receiptDate},
+          </if>
+          <if test="dwState != null and dwState!= ''">
+              dwState = #{dwState},
+          </if>
+          <if test="dwContent != null and dwContent != ''">
+              dwContent = #{dwContent}
+          </if>
+      </set>
+    </sql>
+</mapper>
